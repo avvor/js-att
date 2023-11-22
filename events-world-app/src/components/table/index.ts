@@ -1,0 +1,1 @@
+export { TableAirPoll } from "./component";
