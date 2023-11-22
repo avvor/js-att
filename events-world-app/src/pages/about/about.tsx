@@ -9,9 +9,9 @@ export const About = () => {
         <>
             <Navigation />
             <h1>
-                Веб-сервис для получения информации по частицам pm2.5 и pm10
+                Веб-сервис для получения информации <br /> по частицам pm2.5 и pm10 <br/> находящимся в воздухе
             </h1>
-            <img src={image} alt="AirPollution" width="450"/>
+            <img src={image} alt="AirPollution" height="250px"/>
         </>
     );
 }
