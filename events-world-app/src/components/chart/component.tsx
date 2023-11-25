@@ -23,8 +23,6 @@ export const ChartAirPoll = ({ props }: { props: any}) => {
     let content: JSX.Element;
     if (props!==undefined)
     {
-        
-
         const data = {
             labels: props.time,
             datasets: [

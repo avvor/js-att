@@ -13,7 +13,6 @@ export const Form = ({action = '#', type = 'login'}:{action: string, type: strin
 
     const [userName, setUserName] = useState<string>("");
     const [userPass1, setUserPass1] = useState<string>("");
-    const [userPass2, setUserPass2] = useState<string>("");
     const [isPassError, setPassError] = useState<boolean>(false);
     const [isPass2Error, setPass2Error] = useState<boolean>(false);
     const [isEmailError, setEmailError] = useState<boolean>(false);
@@ -41,7 +40,6 @@ export const Form = ({action = '#', type = 'login'}:{action: string, type: strin
         console.log(userPass1)
         console.log(e.target.value)
         setPass2Error(userPass1 !== e.target.value);
-        setUserPass2(e.target.value);
     };
 
     const onChangeLoginHandler = (e: any) =>  setLoginError(!isLoginValid(e.target.value));

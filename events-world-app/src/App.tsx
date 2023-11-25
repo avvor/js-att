@@ -6,8 +6,12 @@ import { About, Login, NotFound, AirPollution, Main } from './pages';
 
 import {ROUTES} from './data/routes'
 
+import {store} from "./store/store";
+import {Provider} from "react-redux";
+
 function App() {
     return (
+    <Provider store={store}>
       <Routes>
           <Route path={ROUTES.main} element={<Main/>} />
           <Route path={ROUTES.airpollution}  element={
@@ -19,6 +23,7 @@ function App() {
           <Route path={ROUTES.about} element={<About />} />
           <Route path="*" element={<NotFound />} />
       </Routes>
+    </Provider>
   );
 }
 

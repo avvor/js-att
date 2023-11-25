@@ -1,28 +1,10 @@
 import React from "react";
 import './style.css'
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import { ROUTES } from "../../data/routes";
 
 export const Navigation = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const user = localStorage.getItem("auth");
-
-    // if (user === null) {
-    //     return <></>;
-    // }
-
-    const handleLogout = () => {
-        localStorage.removeItem("auth");
-        navigate("/login/");
-    };
-
-    const isThisPath = (pathname: string) => {
-        return location.pathname.match(`^${pathname}$`);
-    };
-    
-
     return (
         <ul>
             <li>
@@ -40,7 +22,7 @@ export const Navigation = () => {
                     style={({ isActive }) => ({
                         color: isActive ? "black" : "gray",
                     })} >
-                    Загрязнения
+                    Информация о городе
                 </NavLink>
             </li>
             <li>
