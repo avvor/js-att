@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Routes, Route }  from 'react-router-dom';
-import { RequireAuth } from "./hocs/requireAuth";
+import { RequireAuth } from "./routes/requireAuth";
 import { About, Login, NotFound, AirPollution, Main } from './pages';
 
 import {ROUTES} from './data/routes'

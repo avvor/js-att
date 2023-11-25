@@ -1,12 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { geocodeApi } from '../services/geocode'
-import { airQualityApi } from '../services/air-quality'
-//import { historyApi } from './historyApi'
+import { geocodeApi } from '../services/geocode-api'
+import { airQualityApi } from '../services/air-quality-api'
+import { historyQueryApi } from '../services/history-query-api'
 
 const rootReducer = combineReducers({
 	[geocodeApi.reducerPath]: geocodeApi.reducer,
 	[airQualityApi.reducerPath]: airQualityApi.reducer,
-	//[historyApi.reducerPath]: historyApi.reducer,
+	[historyQueryApi.reducerPath]: historyQueryApi.reducer,
 })
 
 export const store = configureStore({
@@ -14,5 +14,5 @@ export const store = configureStore({
 	middleware: (getDefaultMiddleware) => 
 		getDefaultMiddleware().concat(geocodeApi.middleware)
 							  .concat(airQualityApi.middleware)
-							 // .concat(historyApi.middleware)
+							  .concat(historyQueryApi.middleware)
 })

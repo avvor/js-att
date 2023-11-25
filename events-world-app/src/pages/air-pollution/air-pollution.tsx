@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import {Navigation, Button, InputText, TableAirPoll, ChartAirPoll, PlaceInfo} from "../../components";
 
-import { useGetGeocodeQuery }  from '../../services/geocode'
-import { useGetAirQualityQuery }  from '../../services/air-quality'
+import { useGetGeocodeQuery }  from '../../services/geocode-api'
+import { useGetAirQualityQuery }  from '../../services/air-quality-api'
+import { useAddHistoryQueryRecordMutation }  from '../../services/history-query-api'
+
 
 export const AirPollution: React.FC = () => {
-
+    
     const [loc, setLoc] = useState("");
     const [place, setPlace] = useState("");
 
@@ -14,6 +16,20 @@ export const AirPollution: React.FC = () => {
     };
 
     const handleClick = () =>  setPlace(loc);
+    
+    const [addHistoryQueryRecord] = useAddHistoryQueryRecordMutation()  
+    const handleSaveHistory = () => { 
+        addHistoryQueryRecord({
+            name: geocode?.name, 
+            descr: geocode?.description, 
+            latitude: geocode?.latitude, 
+            longitude: geocode.longitude, 
+            time: airPollutionData?.time, 
+            pm10: airPollutionData?.pm10,
+            pm2_5: airPollutionData?.pm2_5});
+        handleClick();
+    }
+
 	
 	const { data: geocode} = useGetGeocodeQuery(place, {skip: !place})
 	const { data: airPollutionData} = useGetAirQualityQuery(geocode, {skip: !geocode})
@@ -25,7 +41,7 @@ export const AirPollution: React.FC = () => {
             <div>
                 <InputText type="text" placeholder="Название места" onChange={(e:any) => locChange(e)}></InputText>
                 <Button text="Получить данные" onClick={handleClick} /> 
-                {geocode && <button onClick={handleClick}>Сохранить в БД</button>}
+                {geocode && <button onClick={handleSaveHistory}>Сохранить в БД</button>}
             </div>
             {geocode && <div>
                     <PlaceInfo props={geocode} /> 
