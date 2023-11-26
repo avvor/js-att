@@ -1,7 +1,6 @@
 const User = require("../models/user.model");
 
 exports.addUser = async (req, res) => {
-	console.log(req)
 	try {
 		if (!req.body.name) {
 			return res.status(400).send({
@@ -10,10 +9,8 @@ exports.addUser = async (req, res) => {
 			});
 		}
 		const user = await User.create(req.body)
-		console.log(user)
 		res.status(200).json(user)
 	} catch (error) {
-		console.log(error.mesage)
 		res.status(500).json({message: error.message})
 	}
 }

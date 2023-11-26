@@ -16,10 +16,10 @@ export const TableAirPoll = ({ props }: { props: any }) => {
             <tbody>
                 {Array.from({ length: props.time.length }).map(
                     (_, i) => (
-                        <tr>
-                            <td key={i}>{props.time[i]}</td>
-                            <td key={i}>{props.pm10[i]}</td>
-                            <td key={i}>{props.pm2_5[i]}</td>
+                        <tr key={i}>
+                            <td key={`time-${i}`}>{props.time[i]}</td>
+                            <td key={`pm10-${i}`}>{props.pm10[i]}</td>
+                            <td key={`pm2_5-${i}`}>{props.pm2_5[i]}</td>
                         </tr>
                     ),
                 )}

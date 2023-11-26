@@ -1,16 +1,15 @@
 import React from "react";
 import './style.css'
+
 import {InputText} from "../input-text";
 import {Button} from "../button"
 import {SocialContainer} from "../social-container";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-
+import { useState } from "react";
+import { useUserActions } from "../../hooks";
 
 export const Form = ({action = '#', type = 'login'}:{action: string, type: string}) => {
-    let content: JSX.Element
-
+    
     const [userName, setUserName] = useState<string>("");
     const [userPass1, setUserPass1] = useState<string>("");
     const [isPassError, setPassError] = useState<boolean>(false);
@@ -18,7 +17,7 @@ export const Form = ({action = '#', type = 'login'}:{action: string, type: strin
     const [isEmailError, setEmailError] = useState<boolean>(false);
     const [isLoginError, setLoginError] = useState<boolean>(false);
     
-    const navigate = useNavigate();
+    const userActions = useUserActions();
 
     const isLoginValid = (str: string): boolean => /^[a-z0-9]+$/i.test(str);
     const isMailValid = (str: string): boolean => /^[a-z][a-z0-9._-]*@(?:[a-z0-9_-]+\.)*[a-z]{2,6}$/i.test(str);
@@ -27,9 +26,9 @@ export const Form = ({action = '#', type = 'login'}:{action: string, type: strin
     const onChangeEmailHandler = (e: any) => {
         const val = e.target.value;
         setUserName(val);
-        localStorage.setItem("UserName", val);
         setEmailError(!isMailValid(val));
     };
+    
     const onChangePass1Handler = (e: any) => {
         const pass=e.target.value;
         setPassError(!isPassValid(pass));
@@ -44,44 +43,20 @@ export const Form = ({action = '#', type = 'login'}:{action: string, type: strin
 
     const onChangeLoginHandler = (e: any) =>  setLoginError(!isLoginValid(e.target.value));
 
-    useEffect(() => {
-        const user = localStorage.getItem("UserName") || "";
-        setUserName(user);
-    }, []);
-
-    const onSignInClickHandler = () => {
-        fetch("http://localhost:4040/user", {
-            method: "get",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-        }).then((response) => {
-            localStorage.setItem("auth", "true");
-            navigate("/air-pollution");
-        });
+    const onSignInClickHandler = (e:any) => {
+        e.preventDefault()
+        const data={name: userName, password: userPass1}
+        userActions.login(data).then();
     };
 
-    const onSignUpClickHandler = () => {
-        fetch("http://localhost:4040/login", {
-            method: "post",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name: userName,
-                password: userName,
-                email: userName,
-            }),
-        }).then((response) => {
-            localStorage.setItem("auth", "true");
-            navigate("/air-pollution");
-        });
+    const onSignUpClickHandler = (e:any) => {
+        e.preventDefault()
+        const data={name: userName, password: userPass1, email:userName};
+        console.log(data)
+        userActions.addNewUser(data).then()
     };
 
-
-
+    let content: JSX.Element
     switch (type) {
         case 'login':
             content =
@@ -96,7 +71,8 @@ export const Form = ({action = '#', type = 'login'}:{action: string, type: strin
                     {isPassError && (
                         <div className="error">Пароль должен содержать только английские символы</div>
                     )}
-                    <Button text="Войти" onClick={onSignInClickHandler} />
+                    {!isEmailError && !isPassError &&
+                        <Button text="Войти" onClick={onSignInClickHandler} /> }
                 </form>
             break
         case 'signup':
@@ -119,7 +95,8 @@ export const Form = ({action = '#', type = 'login'}:{action: string, type: strin
                 {isPass2Error && (
                     <div className="error">Пароли не совпадают</div>
                 )}
-                <Button text="Зарегистрироватьcя" onClick={onSignUpClickHandler} />
+                {!isLoginError && !isEmailError && !isPassError && !isPass2Error &&
+                    <Button text="Зарегистрироватьcя" onClick={onSignUpClickHandler} />}
             </form>
             break
     }
