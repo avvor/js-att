@@ -2,8 +2,8 @@
 	position: relative;
 	overflow: hidden;
 	height: 24px;
+    width: 24px;
     cursor:pointer;
-    padding-left: 90px;
 }
 
 img {
