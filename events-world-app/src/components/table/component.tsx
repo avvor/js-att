@@ -1,6 +1,7 @@
 import React from "react";
+import {AirPollutionData} from '../../types/AirPollutionData'
 
-export const TableAirPoll = ({ props }: { props: any }) => {
+export const TableAirPoll = ({ props }: { props: AirPollutionData|undefined }) => {
     let content: JSX.Element;
     if (props!==undefined)
     { 

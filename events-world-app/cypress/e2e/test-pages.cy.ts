@@ -53,18 +53,3 @@ describe('air-pollution', ()=>{
         cy.location('pathname').should('include', '/login')
     })
 })
-
-describe('navigation', ()=>{
-    it('Get Air Pollution Info', () => {
-        cy.get('input').type('тюмень')
-        cy.contains('Получить').click().wait(5000)
-        cy.contains('Тюмень, Россия').should('be.visible')
-        cy.contains('57.152985, 65.541227').should('be.visible')
-        cy.contains('Сохранить в БД').click()
-    })
-    it('Logout User', () => {
-        cy.get('div.logout').parent().click()
-        cy.location('pathname').should('include', '/login')
-    })
-})
-

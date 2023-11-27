@@ -9,6 +9,7 @@ import {
     Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import {AirPollutionData} from '../../types/AirPollutionData'
 
 ChartJS.register(
     CategoryScale,
@@ -19,7 +20,7 @@ ChartJS.register(
     Legend,
 );
 
-export const ChartAirPoll = ({ props }: { props: any}) => {
+export const ChartAirPoll = ({ props }: { props:  AirPollutionData|undefined}) => {
     let content: JSX.Element;
     if (props!==undefined)
     {

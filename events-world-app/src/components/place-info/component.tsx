@@ -1,6 +1,7 @@
 import React from "react";
+import { GeoObject } from "../../types/GeoObject";
 
-export const PlaceInfo = ({ props }: { props: any }) => {
+export const PlaceInfo = ({ props }: { props: GeoObject|undefined }) => {
     let content: JSX.Element;
     if (props!==undefined)
     { 
@@ -10,6 +11,6 @@ export const PlaceInfo = ({ props }: { props: any }) => {
             <p>{props.latitude}, {props.longitude}</p>
         </div>      
     } else 
-        content=<div></div>
+        content=<div>Место не опредедено</div>
     return  content!
 };
