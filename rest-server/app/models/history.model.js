@@ -3,12 +3,13 @@ const mongoose = require('mongoose')
 const querySchema = mongoose.Schema(
     {
         name: String, 
-        descr: String, 
+        description: String, 
         latitude: Number, 
         longitude: Number,
         time: [String],
 		pm10: [Number],
-		pm2_5: [Number]
+		pm2_5: [Number], 
+        username: String,
     },
     {
         timestamps: true

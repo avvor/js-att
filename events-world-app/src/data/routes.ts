@@ -4,4 +4,5 @@ export const enum ROUTES {
     about = "/about",
     contacts = "/contacts",
     login = "/login",
+    historyquery = "/history-query",
 }

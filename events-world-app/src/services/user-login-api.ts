@@ -14,9 +14,10 @@ export const userLoginApi = createApi({
 			}),
 		}), 
         loginUser: build.query({
-			query: () => ({
-				url: 'login',
-				method: 'GET'
+			query: (user) => ({
+				url: `login`,
+				method: 'POST', 
+				body: user
 			}),
 		})
 	})

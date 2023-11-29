@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { Routes, Route }  from 'react-router-dom';
 import { RequireAuth } from "./routes/requireAuth";
-import { About, Login, NotFound, AirPollution, Main } from './pages';
+import { About, Login, NotFound, AirPollution, Main, HistoryQuery } from './pages';
 
 import {ROUTES} from './data/routes'
 
@@ -17,6 +17,11 @@ function App() {
           <Route path={ROUTES.airpollution}  element={
                   <RequireAuth>
                       <AirPollution /> 
+                  </RequireAuth>
+              } />
+          <Route path={ROUTES.historyquery}  element={
+                  <RequireAuth>
+                      <HistoryQuery /> 
                   </RequireAuth>
               } />
           <Route path={ROUTES.login} element={<Login />} />

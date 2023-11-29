@@ -3,7 +3,8 @@ import {Button, InputText, TableAirPoll, ChartAirPoll, PlaceInfo} from "../../co
 
 import { useGetGeocodeQuery }  from '../../services/geocode-api'
 import { useGetAirQualityQuery }  from '../../services/air-quality-api'
-import { useAddHistoryQueryRecordMutation }  from '../../services/history-query-api'
+import { useAddHistoryQueryRecordMutation, useGetHistoryQuery }  from '../../services/history-query-api'
+import { getUserName } from "../../hooks/user.actions";
 
 
 export const AirQuality: React.FC = () => {
@@ -16,19 +17,21 @@ export const AirQuality: React.FC = () => {
     };
 
     const handleClick = () =>  setPlace(loc);
+    const userName = getUserName();
     
-    const [addHistoryQueryRecord] = useAddHistoryQueryRecordMutation()  
+    const [addHistoryQueryRecord] = useAddHistoryQueryRecordMutation() 
+    const {refetch} = useGetHistoryQuery(userName)
     const handleSaveHistory = () => { 
         addHistoryQueryRecord({
             name: geocode?.name, 
-            descr: geocode?.description, 
+            description: geocode?.description, 
             latitude: geocode?.latitude, 
             longitude: geocode.longitude, 
             time: airPollutionData?.time, 
             pm10: airPollutionData?.pm10,
-            pm2_5: airPollutionData?.pm2_5, 
-});
-        handleClick();
+            pm2_5: airPollutionData?.pm2_5,
+            username: userName});
+            refetch()
     }
 
 	
@@ -37,7 +40,6 @@ export const AirQuality: React.FC = () => {
 
     return (
         <>
-            <h1>Загрязнение воздуха</h1>
             <div>
                 <InputText type="text" placeholder="Название места" onChange={(e:any) => locChange(e)}></InputText>
                 <Button text="Получить данные" onClick={handleClick} /> 

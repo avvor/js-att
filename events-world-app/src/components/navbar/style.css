@@ -19,7 +19,6 @@ ul {
     display: flex;
     align-items: center;
     margin-right: auto;
-    gap: 25px;
     height: 70px;
     font-size: 12px;
     width: 768px;

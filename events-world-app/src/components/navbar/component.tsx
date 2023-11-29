@@ -31,6 +31,15 @@ export const Navigation = () => {
                         Информация о городе
                     </NavLink>
                 </li>
+                {isAuth && <li>
+                    <NavLink
+                        to={ROUTES.historyquery}
+                        style={({ isActive }) => ({
+                            color: isActive ? "black" : "gray",
+                        })} >
+                        Сохраненные города
+                    </NavLink>
+                </li>}
                 <li>
                     <NavLink to={ROUTES.about}
                         style={({ isActive }) => ({

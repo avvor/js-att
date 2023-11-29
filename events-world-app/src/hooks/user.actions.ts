@@ -7,17 +7,31 @@ export function useUserActions() {
 
     async function login(data: any) {
         if (data.user!=="" && data.password!=="") {
-            const res=await axios.get('http://localhost:4040/login');
-            setUserData({user: data.user, auth: res.data.success});
-            navigate("/air-pollution");
+            await axios.post(`http://localhost:4040/login`, data) 
+                       .then((res) => {
+                            console.log(res.data.name)
+                            setUserData({user: res.data.name});
+                            navigate("/air-pollution");
+                        })
+                        .catch((res) => {
+                            logout()
+                        })
+           
         }
     }
 
     async function addNewUser(data:any) {
         if (data.user!=="" && data.password!=="" && data.email!=="") {
-            await axios.post('http://localhost:4040/new-user', data);
-            setUserData(data);
-            navigate("/air-pollution");
+            await axios.post('http://localhost:4040/new-user', data)
+            .then((res) => {
+                console.log(res.data.name)
+                setUserData({user: res.data.name});
+                navigate("/air-pollution");
+            })
+            .catch((res) => {
+                logout()
+            })
+
         }
     }
 
@@ -27,10 +41,7 @@ export function useUserActions() {
         navigate("/login")
     }
 
-    return {
-        login,
-        addNewUser,
-        logout
+    return { login, addNewUser, logout
     };
 }
 
@@ -39,8 +50,12 @@ export function isAuthUser() {
     return isAuth!==null
 }
 
+export function getUserName() {
+    const username = localStorage.getItem("username");
+    return username
+}
+
 export function setUserData(data:any) {
-    console.log('set: '+data.user)
     localStorage.setItem("username", data.user)
     localStorage.setItem("auth", "true")
 }

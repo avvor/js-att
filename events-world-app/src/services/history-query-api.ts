@@ -12,8 +12,21 @@ export const historyQueryApi = createApi({
 				method: 'POST',
 				body
 			}),
-		})
+		}),
+		getHistory: build.query({
+			query: (user) => ({
+				url: `get-history?user=${user}`,
+				method: 'GET'
+			}),
+		}), 
+		deleteHistory: build.mutation({
+            query: (params) => ({
+                url: '/delete-history',
+                method: 'POST',
+                body: params,
+            })
+        }),
 	})
 })
 
-export const { useAddHistoryQueryRecordMutation } = historyQueryApi
+export const { useAddHistoryQueryRecordMutation, useGetHistoryQuery, useDeleteHistoryMutation } = historyQueryApi
