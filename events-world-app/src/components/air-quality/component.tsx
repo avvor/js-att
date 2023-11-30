@@ -5,6 +5,7 @@ import { useGetGeocodeQuery }  from '../../services/geocode-api'
 import { useGetAirQualityQuery }  from '../../services/air-quality-api'
 import { useAddHistoryQueryRecordMutation, useGetHistoryQuery }  from '../../services/history-query-api'
 import { getUserName } from "../../hooks/user.actions";
+import logger from "../../logging/logger";
 
 
 export const AirQuality: React.FC = () => {
@@ -16,7 +17,10 @@ export const AirQuality: React.FC = () => {
         setLoc(event.target.value);
     };
 
-    const handleClick = () =>  setPlace(loc);
+    const handleClick = () => {
+         setPlace(loc);
+         logger.postMessage({user: userName, action: `Пользователь ${userName} запросил информацию о месте "${loc}"`});
+    }
     const userName = getUserName();
     
     const [addHistoryQueryRecord] = useAddHistoryQueryRecordMutation() 
@@ -31,7 +35,9 @@ export const AirQuality: React.FC = () => {
             pm10: airPollutionData?.pm10,
             pm2_5: airPollutionData?.pm2_5,
             username: userName});
-            refetch()
+            
+        logger.postMessage({user: userName, action: `Пользователь ${userName} сохранил запрос в БД`})
+        refetch()
     }
 
 	

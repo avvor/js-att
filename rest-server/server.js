@@ -29,6 +29,7 @@ mongoose
 app.use(express.static(path.join(__dirname, "public")));
 require("./app/routes/history.routes")(app);
 require("./app/routes/user.routes")(app);
+require("./app/routes/log.routes")(app);
 
 const PORT = 4040;
 

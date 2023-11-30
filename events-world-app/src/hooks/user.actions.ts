@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import logger from '../logging/logger';
 
 export function useUserActions() {
     
@@ -11,10 +12,11 @@ export function useUserActions() {
                        .then((res) => {
                             console.log(res.data.name)
                             setUserData({user: res.data.name});
+                            logger.postMessage({user: res.data.name, action: `Пользователь ${res.data.name} залогинился`})
                             navigate("/air-pollution");
                         })
                         .catch((res) => {
-                            logout()
+                            logger.postMessage({user: res.data.name, action: `Пользователь ${res.data.name} не смог залогинится`})
                         })
            
         }
@@ -24,8 +26,8 @@ export function useUserActions() {
         if (data.user!=="" && data.password!=="" && data.email!=="") {
             await axios.post('http://localhost:4040/new-user', data)
             .then((res) => {
-                console.log(res.data.name)
-                setUserData({user: res.data.name});
+                setUserData({user: res.data});
+                logger.postMessage({user: res.data, action: `Добавлен новый пользователь ${res.data}`})
                 navigate("/air-pollution");
             })
             .catch((res) => {
@@ -36,8 +38,10 @@ export function useUserActions() {
     }
 
     function logout() {
+        const username=getUserName()
         localStorage.removeItem("username")
         localStorage.removeItem("auth")
+        logger.postMessage({user: username, action: `Пользователь ${username} разлогинился`})
         navigate("/login")
     }
 

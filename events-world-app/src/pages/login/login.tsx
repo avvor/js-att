@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import './style.css'
 import {Form, Overlay, Navigation} from "../../components";
 
-
 export const Login = () => {
     const [rightPanelActive, setRightPanelActive] = useState(false)
     return(
