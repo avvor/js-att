@@ -1,13 +1,17 @@
 import React from 'react';
 import './App.css';
 import { Routes, Route }  from 'react-router-dom';
-import { RequireAuth } from "./hocs/requireAuth";
-import { About, Login, NotFound, AirPollution, Main } from './pages';
+import { RequireAuth } from "./routes/requireAuth";
+import { About, Login, NotFound, AirPollution, Main, HistoryQuery } from './pages';
 
 import {ROUTES} from './data/routes'
 
+import {store} from "./store/store";
+import {Provider} from "react-redux";
+
 function App() {
     return (
+    <Provider store={store}>
       <Routes>
           <Route path={ROUTES.main} element={<Main/>} />
           <Route path={ROUTES.airpollution}  element={
@@ -15,10 +19,16 @@ function App() {
                       <AirPollution /> 
                   </RequireAuth>
               } />
+          <Route path={ROUTES.historyquery}  element={
+                  <RequireAuth>
+                      <HistoryQuery /> 
+                  </RequireAuth>
+              } />
           <Route path={ROUTES.login} element={<Login />} />
           <Route path={ROUTES.about} element={<About />} />
           <Route path="*" element={<NotFound />} />
       </Routes>
+    </Provider>
   );
 }
 

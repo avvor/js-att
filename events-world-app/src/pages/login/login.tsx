@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import './style.css'
-import {Form} from "../../components/form";
-import {Overlay} from "../../components/overlay"
+import {Form, Overlay, Navigation} from "../../components";
 
 export const Login = () => {
     const [rightPanelActive, setRightPanelActive] = useState(false)
     return(
         <div>
+            <Navigation />
             <div className={`container ${rightPanelActive ? 'right-panel-active' : ''}`} id="container">
                 <div className="form-container sign-up-container">
                     <Form action="#" type="signup"></Form>

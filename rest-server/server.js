@@ -9,7 +9,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 app.use(cors());
-//app.use(express.json());
 
 const dbConfig = require("./config/database.config");
 const mongoose = require("mongoose");
@@ -28,8 +27,9 @@ mongoose
     });
 
 app.use(express.static(path.join(__dirname, "public")));
-require("./app/routes/eventsWorld.routes")(app);
-require("./app/routes/userData.routrs")(app);
+require("./app/routes/history.routes")(app);
+require("./app/routes/user.routes")(app);
+require("./app/routes/log.routes")(app);
 
 const PORT = 4040;
 
